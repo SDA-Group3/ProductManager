@@ -17,6 +17,14 @@ public class ProductService {
         this.productRepository = productRepository;
     }
 
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
+    public Product saveProduct(Product product) {
+        return productRepository.save(product);
+    }
+
     public List<Product> getAllProducts() {
         return productRepository.findAll();
     }
