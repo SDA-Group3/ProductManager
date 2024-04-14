@@ -2,6 +2,7 @@ package com.sdagroup.ProductManager.controller;
 
 import com.sdagroup.ProductManager.model.Product;
 import com.sdagroup.ProductManager.service.ProductService;
+import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -9,7 +10,8 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/products")
+@RequestMapping("/api")
+@RequiredArgsConstructor
 public class ProductController {
 
     private ProductService productService;
@@ -17,6 +19,11 @@ public class ProductController {
     @Autowired
     public ProductController(ProductService productService) {
         this.productService = productService;
+    }
+
+    @PostMapping("/products")
+    public Product addProduct(@RequestBody Product product) {
+        return productService.addProduct(product);
     }
 
     @GetMapping
@@ -29,7 +36,7 @@ public class ProductController {
         Product existingProduct = productService.getProductById(id);
         if (existingProduct != null) {
             product.setProductId(id);
-            return ResponseEntity.ok(productService.saveProduct(product));
+            return ResponseEntity.ok(productService.addProduct(product));
         } else {
             return ResponseEntity.notFound().build();
         }
