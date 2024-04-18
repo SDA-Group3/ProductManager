@@ -31,3 +31,30 @@ public class ProductService {
         return productRepository.findAll();
     }
 }
+
+@Service
+@RequiredArgsConstructor
+public class ProductService {
+
+    private final ProductRepository productRepository;
+
+    public Product getProductById(Long id) {
+        return productRepository.findById(id).orElse(null);
+    }
+
+    public Product addProduct(Product product) {
+        return productRepository.save(product);
+    }
+
+    public List<Product> getAllProducts() {
+        return productRepository.findAll();
+    }
+
+    public void deleteProductById(Long id) {
+        productRepository.deleteById(id);
+    }
+
+    public void deleteAllProducts() {
+        productRepository.deleteAll();
+    }
+}
